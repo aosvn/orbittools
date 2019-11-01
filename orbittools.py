@@ -747,7 +747,8 @@ def centT(datein,dateformat = 'J'):
     #modified to handle other dates formats, default is usage as done in the notebook.
     if dateformat == 'S':
         #SPICE string that str2et will take  If you have a JD string, e.g. 'JD 2451545.0', use this
-        centout = (spice.str2et(datein))/36525.0/3600.0/24.0
+        #centout = (spice.str2et(datein))/36525.0/3600.0/24.0
+        print('Error: SPICE not included, str2et not supported at this time. Please reformat your date.')
     elif dateformat == 'ET':
         centout = (datein)/36525.0/3600.0/24.0
     else:
@@ -1088,11 +1089,6 @@ def xyVelPQ(planet,julianD,dateformat='J'):
                                                               dtype='float64')
     return xyVPQ
 
-def helioPosVelEcl(target,et):
-    #get state vector wrt SSB from SPICE in ECLIPJ2000.  Requires user to load relevant kernels and know legal target names.
-    spkezrout=spice.spkezr(target,et,'ECLIPJ2000','none','SSB')
-    state=spkezrout[0]
-    return state
 
 def posVelEcl(planet,julianD,dateformat='J'):
     colw = np.cos(argPeriHel(planet,julianD,dateformat=dateformat)*np.pi/180.0)
